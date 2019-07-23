@@ -1,0 +1,33 @@
+{
+  "name": "landing-components",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "next",
+    "start": "parcel src/index.html",
+    "build": "next build && next export"
+  },
+  "dependencies": {
+    "@zeit/next-css": "^1.0.1",
+    "@zeit/next-sass": "^1.0.1",
+    "bulma": "^0.7.5",
+    "monaco-editor": "^0.17.1",
+    "next": "^9.0.2",
+    "prismjs": "^1.16.0",
+    "prop-types": "^15.7.2",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-json-editor-ajrm": "^2.5.9",
+    "react-monaco-editor": "^0.26.2",
+    "react-splitter-layout": "^4.0.0",
+    "snarkdown": "^1.2.2"
+  },
+  "devDependencies": {
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-plugin-import": "^2.17.3",
+    "eslint-plugin-jsx-a11y": "^6.2.1",
+    "eslint-plugin-react": "^7.13.0",
+    "node-sass": "^4.12.0",
+    "parcel": "^1.12.3"
+  }
+}
