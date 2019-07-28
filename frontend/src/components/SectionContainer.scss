@@ -1,0 +1,18 @@
+
+.section-container-iframe-div {
+  width: 100%;
+  height: 100%;
+  .section-container-iframe-overlay {
+    position: absolute;
+    width:100%;
+    height: 100%;
+  }
+  .section-container-frame {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.section-container {
+  padding-bottom: 1rem;
+}

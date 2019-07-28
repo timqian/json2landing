@@ -1,4 +1,4 @@
-import sections from './sections';
+import sections from '../sections/index';
 
 const htmlTemplate = ({ head, body }) => `<!DOCTYPE html>
 <html>
@@ -19,7 +19,6 @@ const headTemplate = ({ title, description, faviconUrl }) => `
       rel="stylesheet"
       href="https://use.fontawesome.com/releases/v5.6.0/css/all.css"
     />
-
   </head>
 `;
 
@@ -30,10 +29,9 @@ const bodyTemplate = ({ componentArr }) => `
 `;
 
 const jsonToHtml = (pageJson) => {
-  const head = headTemplate(pageJson.head);
+  const head = headTemplate(pageJson.head || {});
 
   const componentArr = pageJson.sections.map((section) => {
-    console.log(section.type, 'section type');
     if (sections[section.type]) {
       return sections[section.type](section.info);
     }

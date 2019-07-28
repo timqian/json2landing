@@ -1,13 +1,22 @@
+import './app.scss';
 import 'bulma';
+import 'bulma-tooltip';
+import 'bulma-switch';
+
 import SplitterLayout from 'react-splitter-layout';
 import 'react-splitter-layout/lib/index.css';
-import './app.scss';
 import React, { useState, useEffect } from 'react';
+import fileDownload from 'js-file-download';
 import JSONInput from 'react-json-editor-ajrm/es';
+
 import jsonToHtml from './utils/jsonToHtml';
+import Modal from './components/Modal';
 
 function App() {
   const [isDragging, setIsDragging] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isPreviewMode, setIsPreviewMode] = useState(false);
+
   const [pageJson, setPageJson] = useState({
     head: {
       title: 'wewe',
@@ -34,6 +43,10 @@ function App() {
             {
               text: 'About',
               href: 'https://wewe.t9t.io/about',
+            },
+            {
+              text: 'GitHub',
+              href: 'https://github.com/t9tio/wewe',
             },
           ],
         },
@@ -72,12 +85,12 @@ function App() {
         },
       },
       {
-        type: 'leftRight1',
+        type: 'features2',
         info: {
           background: 'white',
           content: {
             title: 'Save chat history',
-            description: '',
+            description: 'never lose chat messages',
           },
           img: {
             src: 'https://raw.githubusercontent.com/timqian/images/master/20190723123506.png',
@@ -87,7 +100,7 @@ function App() {
         },
       },
       {
-        type: 'leftRight1',
+        type: 'features2',
         info: {
           background: 'black',
           content: {
@@ -102,7 +115,7 @@ function App() {
         },
       },
       {
-        type: 'leftRight1',
+        type: 'features2',
         info: {
           background: 'white',
           content: {
@@ -117,7 +130,7 @@ function App() {
         },
       },
       {
-        type: 'leftRight1',
+        type: 'features2',
         info: {
           background: 'black',
           content: {
@@ -132,7 +145,7 @@ function App() {
         },
       },
       {
-        type: 'leftRight1',
+        type: 'features2',
         info: {
           background: 'white',
           content: {
@@ -170,33 +183,102 @@ function App() {
   });
 
   const reslutHtml = jsonToHtml(pageJson);
-  console.log(reslutHtml, 'resultHrml');
+
   const frameSrc = `data:text/html,${reslutHtml}`;
 
+  const IframeDiv = () => (
+    <div className="iframe-div">
+      {isDragging ? <div className="iframe-overlay" /> : ''}
+      <iframe
+        className="the-frame"
+        src={frameSrc}
+        title="preview"
+      />
+    </div>
+  );
+
   return (
-    <SplitterLayout onDragStart={() => setIsDragging(true)} onDragEnd={() => setIsDragging(false)}>
-      <div>
-        <JSONInput
-          className="json-editor"
-          placeholder={pageJson}
-          onChange={(obj) => {
-            if (obj.jsObject) setPageJson(obj.jsObject);
-          }}
-          width="100%"
-          height="100vh"
-        />
+    <div>
+      <Modal isModalVisible={isModalVisible} setIsModalVisible={setIsModalVisible} pageJson={pageJson} setPageJson={setPageJson} />
+      <nav className="navbar is-black">
+        <div className="navbar-brand">
+          <a className="navbar-item" href="/">
+            <img src="https://t9t.io/favicon.ico" width="28" height="28" alt="t9t" />
+          </a>
+          <div className="navbar-item">
+            <a
+              className="button is-dark"
+              href
+              onClick={() => setIsModalVisible(true)}
+            >
+              Add a section
+            </a>
 
-      </div>
-      <div className="iframe-div">
-        {isDragging ? <div className="iframe-overlay" /> : ''}
-        <iframe
-          className="the-frame"
-          src={frameSrc}
-          title="preview"
-        />
-      </div>
-    </SplitterLayout>
+          </div>
+          <div className="navbar-item">
+            {/* <a href="https://www.patreon.com/timqian" className="button is-danger is-rounded">Become a Patron!</a> */}
+            <div className="field">
+              <input
+                onChange={() => {
+                  console.log(isPreviewMode);
+                  setIsPreviewMode(!isPreviewMode);
+                }}
+                id="switchRoundedOutlinedSuccess"
+                type="checkbox"
+                name="switchRoundedOutlinedSuccess"
+                className="switch is-rtl is-rounded is-outlined is-success"
+                checked={isPreviewMode}
+              />
 
+              <label htmlFor="switchRoundedOutlinedSuccess">Preview</label>
+            </div>
+          </div>
+        </div>
+        <div className="navbar-end">
+          <div className="navbar-item" href>
+            <a
+              href
+              className="button is-dark"
+              onClick={() => fileDownload(reslutHtml, 'index.html')}
+            >
+              Download HTML
+            </a>
+          </div>
+          <div className="navbar-item" href>
+            <a className="button is-dark tooltip is-tooltip-bottom" data-tooltip="Sign in to save">Save</a>
+          </div>
+          <div className="navbar-item">
+            <a className="button is-outlined is-white">Sign in with GitHub</a>
+          </div>
+        </div>
+      </nav>
+
+      {
+        isPreviewMode ? (
+          <IframeDiv />
+        )
+          : (
+            <SplitterLayout
+              onDragStart={() => setIsDragging(true)}
+              onDragEnd={() => setIsDragging(false)}
+            >
+              <div>
+                <JSONInput
+                  className="json-editor"
+                  placeholder={pageJson}
+                  onChange={(obj) => {
+                    if (obj.jsObject) setPageJson(obj.jsObject);
+                  }}
+                  width="100%"
+                  height="100%"
+                />
+              </div>
+              <IframeDiv />
+            </SplitterLayout>
+          )
+      }
+
+    </div>
   );
 }
 
