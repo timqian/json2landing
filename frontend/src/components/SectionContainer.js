@@ -6,12 +6,11 @@ import JSONInput from 'react-json-editor-ajrm/es';
 import copy from 'copy-to-clipboard';
 import cogoToast from 'cogo-toast';
 
-
 import jsonToHtml from '../utils/jsonToHtml';
 import './SectionContainer.scss';
 
 const SectionContainer = ({ sectionJson, sectionHeight }) => {
-  const [isPreviewMode, setIsPreviewMode] = useState(true);
+  const [isPreviewMode, setIsPreviewMode] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
 
   const onCopyJSON = () => {
@@ -62,7 +61,7 @@ const SectionContainer = ({ sectionJson, sectionHeight }) => {
       </div>
 
       <div style={{
-        height: sectionHeight, marginBottom: '2rem', boxShadow: '0 0 8px 10px gray', position: 'relative',
+        height: 400, marginBottom: '2rem', boxShadow: '0 0 8px 10px gray', position: 'relative',
       }}
       >
         {
@@ -73,6 +72,8 @@ const SectionContainer = ({ sectionJson, sectionHeight }) => {
               <SplitterLayout
                 onDragStart={() => setIsDragging(true)}
                 onDragEnd={() => setIsDragging(false)}
+                percentage
+                secondaryInitialSize={50}
               >
                 <div>
                   <JSONInput

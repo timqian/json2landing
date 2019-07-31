@@ -4,7 +4,7 @@ const sec = ({
   return `
     <section class="hero is-black">
       <div class="hero-body">
-        <div class="container"  style="max-width:900px">
+        <div class="container">
           <h1 class="title is-1 has-text-centered">
             ${title}
           </h1>
@@ -12,7 +12,7 @@ const sec = ({
             ${description}
           </h2>
           <div class="has-text-centered">
-            <a href="${img.imgLinkTo}"><img src="${img.src}" alt="${img.alt}" style="max-height:10rem"></a>
+            <a href="${img.imgLinkTo}"><img src="${img.src}" alt="${img.alt}" style="max-height:15rem"></a>
           </div>
           <br />
           <div class="has-text-centered">

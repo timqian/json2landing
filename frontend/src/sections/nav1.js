@@ -6,17 +6,17 @@ const sec = ({
       <img src="${iconUrl}" alt="favicon" height="28" />
     </a>` : '';
 
-  const leftItems = leftLinks.map(link => `
+  const leftItems = leftLinks ? leftLinks.map(link => `
     <a class="navbar-item" href="${link.href}">
       <strong>${link.text}</strong>
     </a>
-  `).join('');
+  `).join('') : '';
 
-  const rightItems = rightLinks.map(link => `
+  const rightItems = rightLinks ? rightLinks.map(link => `
     <a class="navbar-item" href="${link.href}">
       <strong>${link.text}</strong>
     </a>
-  `).join('');
+  `).join('') : '';
 
   return `
     <nav class="navbar is-black" role="navigation" aria-label="main navigation">
